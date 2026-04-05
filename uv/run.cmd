@@ -42,15 +42,15 @@ if errorlevel 1 exit /b 1
 pushd "%PROJECT_ROOT%"
 if defined CFG_SYNC_ARGS (
     echo [run-uv] Running: uv sync %CFG_SYNC_ARGS%
-    "%UV_EXE%" sync %CFG_SYNC_ARGS%
+    "%UV_EXE%" sync --frozen %CFG_SYNC_ARGS%
 ) else (
     echo [run-uv] Running: uv sync
-    "%UV_EXE%" sync
+    "%UV_EXE%" sync --frozen
 )
 if errorlevel 1 (
-    set "SYNC_EXIT=%ERRORLEVEL%"
+    set "SYNC_EXIT=!ERRORLEVEL!"
     popd
-    exit /b %SYNC_EXIT%
+    exit /b !SYNC_EXIT!
 )
 
 echo [run-uv] Running: uv run "%CFG_RUN_TARGET%" %RUN_USER_ARGS%
